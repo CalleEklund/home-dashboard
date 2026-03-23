@@ -1,0 +1,20 @@
+{
+  "name": "@smartfridge/api-schema",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "generate": "openapi-typescript open-api-spec.json --output src/schema.ts",
+    "build": "pnpm generate && tsc -p tsconfig.json"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.9.0",
+    "typescript": "~5.9.3"
+  }
+}

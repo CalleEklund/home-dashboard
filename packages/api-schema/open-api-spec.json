@@ -1,0 +1,1693 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api/ica/status": {
+      "get": {
+        "operationId": "IcaController_status",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "authenticated": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "authenticated"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/login/start": {
+      "post": {
+        "operationId": "IcaController_startLogin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "qrCode": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "qrCode"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/login/poll": {
+      "get": {
+        "operationId": "IcaController_pollLogin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": [
+                        "string"
+                      ],
+                      "enum": [
+                        "pending",
+                        "complete",
+                        "failed"
+                      ]
+                    },
+                    "qrCode": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "message": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "status"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/login/cancel": {
+      "post": {
+        "operationId": "IcaController_cancelLogin",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/logout": {
+      "post": {
+        "operationId": "IcaController_logout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/lists": {
+      "get": {
+        "operationId": "IcaController_getLists",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "name": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "rows": {
+                        "type": [
+                          "array"
+                        ],
+                        "items": {
+                          "type": [
+                            "object"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": [
+                                "string"
+                              ]
+                            },
+                            "text": {
+                              "type": [
+                                "string"
+                              ]
+                            },
+                            "isStriked": {
+                              "type": [
+                                "boolean"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "text",
+                            "isStriked"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "rows"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      },
+      "post": {
+        "operationId": "IcaController_createList",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object"
+                ],
+                "properties": {
+                  "name": {
+                    "type": [
+                      "string"
+                    ]
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "rows": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "object"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": [
+                              "string"
+                            ]
+                          },
+                          "text": {
+                            "type": [
+                              "string"
+                            ]
+                          },
+                          "isStriked": {
+                            "type": [
+                              "boolean"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "text",
+                          "isStriked"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "rows"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/lists/{listId}": {
+      "delete": {
+        "operationId": "IcaController_deleteList",
+        "parameters": [
+          {
+            "name": "listId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/lists/{listId}/items": {
+      "post": {
+        "operationId": "IcaController_addItem",
+        "parameters": [
+          {
+            "name": "listId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object"
+                ],
+                "properties": {
+                  "text": {
+                    "type": [
+                      "string"
+                    ]
+                  }
+                },
+                "required": [
+                  "text"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/ica/items/{rowId}": {
+      "delete": {
+        "operationId": "IcaController_removeItem",
+        "parameters": [
+          {
+            "name": "rowId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Ica"
+        ]
+      }
+    },
+    "/api/calendar/feeds": {
+      "get": {
+        "operationId": "CalendarController_getFeeds",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "personName": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "color": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "icsUrl": {
+                        "type": [
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "personName",
+                      "color",
+                      "icsUrl"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Calendar"
+        ]
+      },
+      "post": {
+        "operationId": "CalendarController_addFeed",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object"
+                ],
+                "properties": {
+                  "personName": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "color": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "icsUrl": {
+                    "type": [
+                      "string"
+                    ]
+                  }
+                },
+                "required": [
+                  "personName",
+                  "color",
+                  "icsUrl"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "personName": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "color": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "icsUrl": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "personName",
+                    "color",
+                    "icsUrl"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Calendar"
+        ]
+      }
+    },
+    "/api/calendar/feeds/{id}": {
+      "delete": {
+        "operationId": "CalendarController_removeFeed",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Calendar"
+        ]
+      }
+    },
+    "/api/calendar/events": {
+      "get": {
+        "operationId": "CalendarController_getEvents",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "uid": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "summary": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "start": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "end": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "allDay": {
+                        "type": [
+                          "boolean"
+                        ]
+                      },
+                      "location": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "personName": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "color": {
+                        "type": [
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "uid",
+                      "summary",
+                      "start",
+                      "end",
+                      "allDay",
+                      "location",
+                      "personName",
+                      "color"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Calendar"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "SmartFridge API",
+    "description": "",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {}
+  }
+}

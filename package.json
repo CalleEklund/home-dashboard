@@ -1,0 +1,16 @@
+{
+  "name": "smartfridge",
+  "private": true,
+  "scripts": {
+    "client": "pnpm --filter @smartfridge/client dev",
+    "build": "pnpm --filter @smartfridge/api-schema build && pnpm --filter @smartfridge/client build",
+    "generate": "pnpm --filter @smartfridge/api-schema generate",
+    "lint": "pnpm --filter @smartfridge/client lint",
+    "server": "pnpm --filter @smartfridge/server dev",
+    "docker:up": "docker compose -f infrastructure/local/docker-compose.yml up -d",
+    "docker:down": "docker compose -f infrastructure/local/docker-compose.yml down",
+    "docker:logs": "docker compose -f infrastructure/local/docker-compose.yml logs -f",
+    "docker:build": "docker compose -f infrastructure/local/docker-compose.yml build",
+    "chrome": "docker compose -f infrastructure/local/docker-compose.yml up -d chrome"
+  }
+}
