@@ -1,5 +1,5 @@
 {
-  "name": "@smartfridge/typescript-config",
+  "name": "@home-dashboard/typescript-config",
   "private": true,
   "version": "0.0.0",
   "type": "module",

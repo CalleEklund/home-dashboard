@@ -1,4 +1,4 @@
-import type { paths } from "@smartfridge/api-schema";
+import type { paths } from "@home-dashboard/api-schema";
 import createFetchClient from "openapi-fetch";
 import createQueryClient from "openapi-react-query";
 

@@ -1,5 +1,5 @@
 {
-  "name": "@smartfridge/api-schema",
+  "name": "@home-dashboard/api-schema",
   "private": true,
   "version": "0.0.0",
   "type": "module",

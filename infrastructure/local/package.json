@@ -1,0 +1,10 @@
+{
+  "name": "@home-dashboard/local-infra",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "up": "docker compose up -d",
+    "build": "docker compose -f docker-compose.yaml build",
+    "clean": "rm -rf ./volumes"
+  }
+}

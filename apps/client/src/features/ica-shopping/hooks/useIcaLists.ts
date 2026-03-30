@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from "react";
 import type { IcaList } from "../types";
 import * as api from "../api";
 import { AuthError } from "../api";
+import * as settingsApi from "../../../kernel/api/settings";
 
-const LIST_STORAGE_KEY = "fridge_ica_list_id";
 const POLL_INTERVAL = 60_000;
 
 export function useIcaLists(
@@ -13,17 +13,20 @@ export function useIcaLists(
 ) {
   const [lists, setLists] = useState<IcaList[]>([]);
   const [lastFetched, setLastFetched] = useState<Date | null>(null);
-  const [selectedListId, setSelectedListId] = useState<string | null>(() => {
-    try {
-      return localStorage.getItem(LIST_STORAGE_KEY);
-    } catch {
-      return null;
-    }
-  });
+  const [selectedListId, setSelectedListId] = useState<string | null>(null);
   const [showListPicker, setShowListPicker] = useState(false);
 
+  // Load selected list ID from server
   useEffect(() => {
-    if (selectedListId) localStorage.setItem(LIST_STORAGE_KEY, selectedListId);
+    settingsApi.getSettings().then((s) => {
+      if (s.icaListId) setSelectedListId(s.icaListId);
+    }).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (selectedListId) {
+      settingsApi.updateSettings({ icaListId: selectedListId }).catch(() => {});
+    }
   }, [selectedListId]);
 
   const fetchLists = useCallback(async () => {
@@ -82,7 +85,7 @@ export function useIcaLists(
     setLists((prev) => prev.filter((l) => l.id !== listId));
     if (selectedListId === listId) {
       setSelectedListId(null);
-      localStorage.removeItem(LIST_STORAGE_KEY);
+      settingsApi.updateSettings({ icaListId: null }).catch(() => {});
       setShowListPicker(true);
     }
   };
@@ -103,7 +106,7 @@ export function useIcaLists(
   const clearOnLogout = () => {
     setLists([]);
     setSelectedListId(null);
-    localStorage.removeItem(LIST_STORAGE_KEY);
+    settingsApi.updateSettings({ icaListId: null }).catch(() => {});
   };
 
   const activeList = lists.find((l) => l.id === selectedListId) ?? null;

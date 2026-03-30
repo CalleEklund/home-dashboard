@@ -1,33 +1,40 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
+import * as settingsApi from "../../../kernel/api/settings"
 
 type Note = { id: string; text: string }
 type NoteList = { id: string; name: string; notes: Note[] }
 
-function loadLists(): NoteList[] {
-  try {
-    const raw = localStorage.getItem("fridge_notes")
-    if (raw) {
-      const parsed = JSON.parse(raw)
-      // Migrate from old flat Note[] format
-      if (Array.isArray(parsed) && parsed.length > 0 && "text" in parsed[0]) {
-        return [{ id: "default", name: "Notes", notes: parsed }]
-      }
-      return parsed
-    }
-  } catch { /* ignore */ }
-  return [{ id: "default", name: "Notes", notes: [] }]
-}
+const DEFAULT_LISTS: NoteList[] = [{ id: "default", name: "Notes", notes: [] }]
 
 export default function Notes() {
-  const [lists, setLists] = useState<NoteList[]>(loadLists)
-  const [activeListId, setActiveListId] = useState(() => lists[0]?.id ?? "default")
+  const [lists, setLists] = useState<NoteList[]>(DEFAULT_LISTS)
+  const [activeListId, setActiveListId] = useState("default")
   const [input, setInput] = useState("")
   const [renaming, setRenaming] = useState<string | null>(null)
   const [renameValue, setRenameValue] = useState("")
+  const [loaded, setLoaded] = useState(false)
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
 
+  // Load from server
   useEffect(() => {
-    localStorage.setItem("fridge_notes", JSON.stringify(lists))
-  }, [lists])
+    settingsApi.getNoteLists().then((data) => {
+      if (data.length > 0) {
+        setLists(data)
+        setActiveListId(data[0].id)
+      }
+      setLoaded(true)
+    }).catch(() => setLoaded(true))
+  }, [])
+
+  // Debounced save to server
+  useEffect(() => {
+    if (!loaded) return
+    clearTimeout(saveTimer.current)
+    saveTimer.current = setTimeout(() => {
+      settingsApi.setNoteLists(lists).catch(() => {})
+    }, 500)
+    return () => clearTimeout(saveTimer.current)
+  }, [lists, loaded])
 
   const activeList = lists.find((l) => l.id === activeListId)
 

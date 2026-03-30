@@ -1677,6 +1677,1977 @@
           "Calendar"
         ]
       }
+    },
+    "/api/settings": {
+      "get": {
+        "operationId": "SettingsController_getSettings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "lockTimeoutMins": {
+                      "type": [
+                        "number"
+                      ]
+                    },
+                    "departuresSiteId": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "departuresSiteName": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "departuresCount": {
+                      "type": [
+                        "number"
+                      ]
+                    },
+                    "icaListId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "lockTimeoutMins",
+                    "departuresSiteId",
+                    "departuresSiteName",
+                    "departuresCount",
+                    "icaListId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      },
+      "patch": {
+        "operationId": "SettingsController_updateSettings",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object"
+                ],
+                "properties": {
+                  "lockTimeoutMins": {
+                    "type": [
+                      "number"
+                    ]
+                  },
+                  "departuresSiteId": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "departuresSiteName": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "departuresCount": {
+                    "type": [
+                      "number"
+                    ]
+                  },
+                  "icaListId": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "lockTimeoutMins": {
+                      "type": [
+                        "number"
+                      ]
+                    },
+                    "departuresSiteId": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "departuresSiteName": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "departuresCount": {
+                      "type": [
+                        "number"
+                      ]
+                    },
+                    "icaListId": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "lockTimeoutMins",
+                    "departuresSiteId",
+                    "departuresSiteName",
+                    "departuresCount",
+                    "icaListId"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/api/pages": {
+      "get": {
+        "operationId": "SettingsController_getPages",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "name": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "position": {
+                        "type": [
+                          "number"
+                        ]
+                      },
+                      "layout": {
+                        "type": [
+                          "array"
+                        ],
+                        "items": {
+                          "type": [
+                            "object"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": [
+                                "string"
+                              ]
+                            },
+                            "colStart": {
+                              "type": [
+                                "number"
+                              ]
+                            },
+                            "rowStart": {
+                              "type": [
+                                "number"
+                              ]
+                            },
+                            "colSpan": {
+                              "type": [
+                                "number"
+                              ]
+                            },
+                            "rowSpan": {
+                              "type": [
+                                "number"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "colStart",
+                            "rowStart",
+                            "colSpan",
+                            "rowSpan"
+                          ],
+                          "additionalProperties": true
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "position",
+                      "layout"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      },
+      "put": {
+        "operationId": "SettingsController_setPages",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "array"
+                ],
+                "items": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "position": {
+                      "type": [
+                        "number"
+                      ]
+                    },
+                    "layout": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "object"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": [
+                              "string"
+                            ]
+                          },
+                          "colStart": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "rowStart": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "colSpan": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "rowSpan": {
+                            "type": [
+                              "number"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "colStart",
+                          "rowStart",
+                          "colSpan",
+                          "rowSpan"
+                        ],
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "position",
+                    "layout"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "name": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "position": {
+                        "type": [
+                          "number"
+                        ]
+                      },
+                      "layout": {
+                        "type": [
+                          "array"
+                        ],
+                        "items": {
+                          "type": [
+                            "object"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": [
+                                "string"
+                              ]
+                            },
+                            "colStart": {
+                              "type": [
+                                "number"
+                              ]
+                            },
+                            "rowStart": {
+                              "type": [
+                                "number"
+                              ]
+                            },
+                            "colSpan": {
+                              "type": [
+                                "number"
+                              ]
+                            },
+                            "rowSpan": {
+                              "type": [
+                                "number"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "colStart",
+                            "rowStart",
+                            "colSpan",
+                            "rowSpan"
+                          ],
+                          "additionalProperties": true
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "position",
+                      "layout"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/api/lock-layout": {
+      "get": {
+        "operationId": "SettingsController_getLockLayout",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "layout": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "object"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": [
+                              "string"
+                            ]
+                          },
+                          "colStart": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "rowStart": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "colSpan": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "rowSpan": {
+                            "type": [
+                              "number"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "colStart",
+                          "rowStart",
+                          "colSpan",
+                          "rowSpan"
+                        ],
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "required": [
+                    "layout"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      },
+      "put": {
+        "operationId": "SettingsController_setLockLayout",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object"
+                ],
+                "properties": {
+                  "layout": {
+                    "type": [
+                      "array"
+                    ],
+                    "items": {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": [
+                            "string"
+                          ]
+                        },
+                        "colStart": {
+                          "type": [
+                            "number"
+                          ]
+                        },
+                        "rowStart": {
+                          "type": [
+                            "number"
+                          ]
+                        },
+                        "colSpan": {
+                          "type": [
+                            "number"
+                          ]
+                        },
+                        "rowSpan": {
+                          "type": [
+                            "number"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "colStart",
+                        "rowStart",
+                        "colSpan",
+                        "rowSpan"
+                      ],
+                      "additionalProperties": true
+                    }
+                  }
+                },
+                "required": [
+                  "layout"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "layout": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "object"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": [
+                              "string"
+                            ]
+                          },
+                          "colStart": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "rowStart": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "colSpan": {
+                            "type": [
+                              "number"
+                            ]
+                          },
+                          "rowSpan": {
+                            "type": [
+                              "number"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "colStart",
+                          "rowStart",
+                          "colSpan",
+                          "rowSpan"
+                        ],
+                        "additionalProperties": true
+                      }
+                    }
+                  },
+                  "required": [
+                    "layout"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/api/notes": {
+      "get": {
+        "operationId": "SettingsController_getNotes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "name": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "notes": {
+                        "type": [
+                          "array"
+                        ],
+                        "items": {
+                          "type": [
+                            "object"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": [
+                                "string"
+                              ]
+                            },
+                            "text": {
+                              "type": [
+                                "string"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "text"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "notes"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      },
+      "put": {
+        "operationId": "SettingsController_setNotes",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "array"
+                ],
+                "items": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "name": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "notes": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "object"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": [
+                              "string"
+                            ]
+                          },
+                          "text": {
+                            "type": [
+                              "string"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "text"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "notes"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "name": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "notes": {
+                        "type": [
+                          "array"
+                        ],
+                        "items": {
+                          "type": [
+                            "object"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": [
+                                "string"
+                              ]
+                            },
+                            "text": {
+                              "type": [
+                                "string"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "text"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "notes"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/api/planner/tasks": {
+      "get": {
+        "operationId": "SettingsController_getTasks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "array"
+                  ],
+                  "items": {
+                    "type": [
+                      "object"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "text": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "days": {
+                        "type": [
+                          "array"
+                        ],
+                        "items": {
+                          "type": [
+                            "string"
+                          ]
+                        }
+                      },
+                      "color": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "recurrence": {
+                        "type": [
+                          "string"
+                        ]
+                      },
+                      "createdWeek": {
+                        "type": [
+                          "string"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "text",
+                      "days",
+                      "color",
+                      "recurrence",
+                      "createdWeek"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      },
+      "post": {
+        "operationId": "SettingsController_addTask",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object"
+                ],
+                "properties": {
+                  "text": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "days": {
+                    "type": [
+                      "array"
+                    ],
+                    "items": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
+                  "color": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "recurrence": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "createdWeek": {
+                    "type": [
+                      "string"
+                    ]
+                  }
+                },
+                "required": [
+                  "text",
+                  "days",
+                  "color",
+                  "recurrence",
+                  "createdWeek"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "text": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "days": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "string"
+                        ]
+                      }
+                    },
+                    "color": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "recurrence": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "createdWeek": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text",
+                    "days",
+                    "color",
+                    "recurrence",
+                    "createdWeek"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
+    },
+    "/api/planner/tasks/{id}": {
+      "put": {
+        "operationId": "SettingsController_updateTask",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": [
+                  "object"
+                ],
+                "properties": {
+                  "text": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "days": {
+                    "type": [
+                      "array"
+                    ],
+                    "items": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
+                  "color": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "recurrence": {
+                    "type": [
+                      "string"
+                    ]
+                  },
+                  "createdWeek": {
+                    "type": [
+                      "string"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "text": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "days": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "string"
+                        ]
+                      }
+                    },
+                    "color": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "recurrence": {
+                      "type": [
+                        "string"
+                      ]
+                    },
+                    "createdWeek": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "text",
+                    "days",
+                    "color",
+                    "recurrence",
+                    "createdWeek"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      },
+      "delete": {
+        "operationId": "SettingsController_deleteTask",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": [
+                "string"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": [
+                    "object"
+                  ],
+                  "properties": {
+                    "ok": {
+                      "type": [
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "ok"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_BODY"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_PATH_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    },
+                    {
+                      "type": [
+                        "object"
+                      ],
+                      "properties": {
+                        "code": {
+                          "type": [
+                            "string"
+                          ],
+                          "enum": [
+                            "INVALID_QUERY_PARAMETER"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "code"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Settings"
+        ]
+      }
     }
   },
   "info": {

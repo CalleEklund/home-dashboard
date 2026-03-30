@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import type { WidgetLayout, WidgetId } from "../types";
 import { DEFAULT_LAYOUT } from "../grid/constants";
 import { WIDGETS } from "../registry";
 import { hasCollision, findFreeCell } from "../grid/grid";
+import * as settingsApi from "../api/settings";
 
 export type DashboardPage = {
   id: string;
@@ -10,34 +11,38 @@ export type DashboardPage = {
   layout: WidgetLayout[];
 };
 
-const STORAGE_KEY = "fridge_pages";
-
-function loadPages(): DashboardPage[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].id) return parsed;
-    }
-    // Migrate from old single-layout format
-    const oldLayout = localStorage.getItem("fridge_layout");
-    if (oldLayout) {
-      const layout = JSON.parse(oldLayout);
-      return [{ id: "default", name: "Home", layout }];
-    }
-  } catch { /* ignore */ }
-  return [{ id: "default", name: "Home", layout: DEFAULT_LAYOUT }];
-}
+const DEFAULT_PAGES: DashboardPage[] = [
+  { id: "default", name: "Home", layout: DEFAULT_LAYOUT },
+];
 
 export function usePages() {
-  const [pages, setPages] = useState<DashboardPage[]>(loadPages);
+  const [pages, setPages] = useState<DashboardPage[]>(DEFAULT_PAGES);
   const [activePageIndex, setActivePageIndex] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
+  // Load from server
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(pages));
-  }, [pages]);
+    settingsApi.getPages().then((data) => {
+      if (data.length > 0) {
+        setPages(data.map((p) => ({ id: p.id, name: p.name, layout: p.layout as WidgetLayout[] })));
+      }
+      setLoaded(true);
+    }).catch(() => setLoaded(true));
+  }, []);
 
-  // Clamp index if pages are deleted
+  // Debounced save to server
+  useEffect(() => {
+    if (!loaded) return;
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      settingsApi.setPages(
+        pages.map((p, i) => ({ id: p.id, name: p.name, position: i, layout: p.layout })),
+      ).catch(() => {});
+    }, 500);
+    return () => clearTimeout(saveTimer.current);
+  }, [pages, loaded]);
+
   const safeIndex = Math.min(activePageIndex, pages.length - 1);
   const activePage = pages[safeIndex];
 
@@ -89,7 +94,6 @@ export function usePages() {
     setActiveLayout(() => DEFAULT_LAYOUT);
   };
 
-  // Page management
   const addPage = (name: string) => {
     const newPage: DashboardPage = {
       id: Date.now().toString(),
@@ -97,11 +101,11 @@ export function usePages() {
       layout: [],
     };
     setPages((prev) => [...prev, newPage]);
-    setActivePageIndex(pages.length); // switch to new page
+    setActivePageIndex(pages.length);
   };
 
   const deletePage = (index: number) => {
-    if (pages.length <= 1) return; // can't delete last page
+    if (pages.length <= 1) return;
     setPages((prev) => prev.filter((_, i) => i !== index));
     if (activePageIndex >= index && activePageIndex > 0) {
       setActivePageIndex((i) => i - 1);

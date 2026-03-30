@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import type { PlannerTask, Weekday, Recurrence } from "../types";
-
-const STORAGE_KEY = "fridge_weekly_planner";
+import * as settingsApi from "../../../kernel/api/settings";
 
 const COLORS = [
   "#89b4fa", "#a6e3a1", "#fab387", "#cba6f7", "#f38ba8", "#f9e2af",
@@ -48,29 +47,16 @@ function isVisibleForWeek(task: PlannerTask, targetMonday: Date): boolean {
   }
 }
 
-function loadTasks(): PlannerTask[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      return parsed.map((t: PlannerTask & { recurring?: boolean }) => {
-        if (!t.recurrence && "recurring" in t) {
-          return { ...t, recurrence: t.recurring ? "weekly" : "once", createdWeek: t.createdWeek ?? getMonday(new Date()).toISOString() };
-        }
-        return { ...t, createdWeek: t.createdWeek ?? getMonday(new Date()).toISOString() };
-      });
-    }
-  } catch { /* ignore */ }
-  return [];
-}
-
 export function usePlannerTasks() {
-  const [tasks, setTasks] = useState<PlannerTask[]>(loadTasks);
+  const [tasks, setTasks] = useState<PlannerTask[]>([]);
   const [weekOffset, setWeekOffset] = useState(0);
 
+  // Load from server
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-  }, [tasks]);
+    settingsApi.getPlannerTasks().then((data) => {
+      setTasks(data as PlannerTask[]);
+    }).catch(() => {});
+  }, []);
 
   const currentMonday = useMemo(
     () => addWeeks(getMonday(new Date()), weekOffset),
@@ -82,23 +68,21 @@ export function usePlannerTasks() {
     [tasks, currentMonday],
   );
 
-  const addTask = (text: string, days: Weekday[], recurrence: Recurrence) => {
+  const addTask = async (text: string, days: Weekday[], recurrence: Recurrence) => {
     const color = COLORS[tasks.length % COLORS.length];
-    setTasks((prev) => [
-      ...prev,
-      {
-        id: Date.now().toString(),
-        text,
-        days,
-        color,
-        recurrence,
-        createdWeek: getMonday(new Date()).toISOString(),
-      },
-    ]);
+    const task = await settingsApi.addPlannerTask({
+      text,
+      days,
+      color,
+      recurrence,
+      createdWeek: getMonday(new Date()).toISOString(),
+    });
+    setTasks((prev) => [...prev, task as PlannerTask]);
   };
 
-  const removeTask = (id: string) => {
+  const removeTask = async (id: string) => {
     setTasks((prev) => prev.filter((t) => t.id !== id));
+    await settingsApi.deletePlannerTask(id).catch(() => {});
   };
 
   const goNext = useCallback(() => setWeekOffset((o) => o + 1), []);

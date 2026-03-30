@@ -43,8 +43,8 @@ export class CalendarController {
 
   @Get('feeds')
   @UseHttpBorder(feedsBorder)
-  getFeeds(): InferFromHttpBorder<typeof feedsBorder, 'response'> {
-    const feeds = this.calendarService.getFeeds();
+  async getFeeds(): Promise<InferFromHttpBorder<typeof feedsBorder, 'response'>> {
+    const feeds = await this.calendarService.getFeeds();
     return feedsBorder.createResponse(HttpStatus.OK, CalendarMapper.toFeedsHttp(feeds));
   }
 
@@ -59,10 +59,10 @@ export class CalendarController {
 
   @Delete('feeds/:id')
   @UseHttpBorder(removeFeedBorder)
-  removeFeed(
+  async removeFeed(
     @Param() params: InferFromHttpBorder<typeof removeFeedBorder, 'pathParameters'>,
-  ): InferFromHttpBorder<typeof removeFeedBorder, 'response'> {
-    this.calendarService.removeFeed(params.id);
+  ): Promise<InferFromHttpBorder<typeof removeFeedBorder, 'response'>> {
+    await this.calendarService.removeFeed(params.id);
     return removeFeedBorder.createResponse(HttpStatus.OK, { ok: true });
   }
 

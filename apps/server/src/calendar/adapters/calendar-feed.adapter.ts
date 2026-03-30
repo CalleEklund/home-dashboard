@@ -17,13 +17,13 @@ type FeedJson = { id: string; personName: string; color: string; icsUrl: string 
 export class CalendarFeedAdapter extends CalendarFeedPort {
   private readonly logger = new Logger(CalendarFeedAdapter.name);
 
-  getFeeds(): CalendarFeed[] {
+  async getFeeds(): Promise<CalendarFeed[]> {
     return this.readFeeds().map(
       (f) => new CalendarFeed(f.id, f.personName, f.color, f.icsUrl),
     );
   }
 
-  addFeed(personName: string, color: string, icsUrl: string): CalendarFeed {
+  async addFeed(personName: string, color: string, icsUrl: string): Promise<CalendarFeed> {
     const feeds = this.readFeeds();
     const feed: FeedJson = {
       id: crypto.randomUUID(),
@@ -37,7 +37,7 @@ export class CalendarFeedAdapter extends CalendarFeedPort {
     return new CalendarFeed(feed.id, feed.personName, feed.color, feed.icsUrl);
   }
 
-  removeFeed(id: string): void {
+  async removeFeed(id: string): Promise<void> {
     const feeds = this.readFeeds().filter((f) => f.id !== id);
     this.writeFeeds(feeds);
     this.logger.log(`Removed feed: ${id}`);

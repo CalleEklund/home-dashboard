@@ -1,11 +1,12 @@
 {
-  "name": "@smartfridge/server",
+  "name": "@home-dashboard/server",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",
-    "start": "node dist/main.js"
+    "start": "node dist/main.js",
+    "migrate": "atlas migrate apply --env local"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
@@ -13,17 +14,21 @@
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/swagger": "^11.2.6",
     "@qte/nest-border-patrol": "^0.3.0",
+    "neverthrow": "^8.2.0",
     "node-ical": "^0.25.6",
+    "pg": "^8.20.0",
     "puppeteer-core": "^24.40.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0",
+    "slonik": "^46.2.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.0",
-    "@smartfridge/typescript-config": "workspace:*",
+    "@home-dashboard/typescript-config": "workspace:*",
     "@types/express": "^5.0.0",
     "@types/node": "^24.0.0",
+    "@types/pg": "^8.20.0",
     "typescript": "~5.9.3"
   }
 }

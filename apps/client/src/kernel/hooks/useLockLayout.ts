@@ -1,29 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { WidgetLayout, WidgetId } from "../types";
 import { WIDGETS } from "../registry";
 import { hasCollision, findFreeCell } from "../grid/grid";
-
-const STORAGE_KEY = "fridge_lock_layout";
+import * as settingsApi from "../api/settings";
 
 const DEFAULT_LOCK_LAYOUT: WidgetLayout[] = [
   { id: "clock", colStart: 7, rowStart: 4, colSpan: 6, rowSpan: 3, lockScreen: true },
   { id: "weather", colStart: 7, rowStart: 7, colSpan: 6, rowSpan: 3, lockScreen: true },
 ];
 
-function loadLockLayout(): WidgetLayout[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch { /* ignore */ }
-  return DEFAULT_LOCK_LAYOUT;
-}
-
 export function useLockLayout() {
-  const [layout, setLayout] = useState<WidgetLayout[]>(loadLockLayout);
+  const [layout, setLayout] = useState<WidgetLayout[]>(DEFAULT_LOCK_LAYOUT);
+  const [loaded, setLoaded] = useState(false);
+  const saveTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
+  // Load from server
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(layout));
-  }, [layout]);
+    settingsApi.getLockLayout().then((data) => {
+      if (data.layout && (data.layout as WidgetLayout[]).length > 0) {
+        setLayout(data.layout as WidgetLayout[]);
+      }
+      setLoaded(true);
+    }).catch(() => setLoaded(true));
+  }, []);
+
+  // Debounced save to server
+  useEffect(() => {
+    if (!loaded) return;
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => {
+      settingsApi.setLockLayout(layout).catch(() => {});
+    }, 500);
+    return () => clearTimeout(saveTimer.current);
+  }, [layout, loaded]);
 
   const moveWidget = (id: WidgetId, colStart: number, rowStart: number) => {
     setLayout((prev) => {

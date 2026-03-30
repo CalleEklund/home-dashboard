@@ -1,4 +1,4 @@
-# @smartfridge/client
+# @home-dashboard/client
 
 React dashboard for a kiosk-mode touchscreen. Built with Vite, Tailwind CSS (Catppuccin Mocha theme), and TanStack Query.
 
@@ -36,7 +36,7 @@ Complex features follow a consistent structure:
 ```
 <feature>/
   index.ts             Barrel export (default component)
-  types.ts             Feature-specific types (or re-exported from @smartfridge/api-schema)
+  types.ts             Feature-specific types (or re-exported from @home-dashboard/api-schema)
   api.ts               TanStack Query hooks (useQuery/useMutation via openapi-react-query)
   helpers.ts           Pure utility functions
   hooks/               Custom React hooks (state management)
@@ -52,7 +52,7 @@ End-to-end type safety from server Zod schemas to client API calls:
 
 1. Server generates `open-api-spec.json` via `@nestjs/swagger`
 2. `packages/api-schema` runs `openapi-typescript` to generate typed `paths` interface
-3. Client imports types from `@smartfridge/api-schema`
+3. Client imports types from `@home-dashboard/api-schema`
 4. `kernel/api/client.ts` creates a typed `openapi-fetch` client + `openapi-react-query` wrapper
 5. Features use `api.useQuery("get", "/api/calendar/events")` — fully typed endpoint, params, and response
 

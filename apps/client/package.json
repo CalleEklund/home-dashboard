@@ -1,5 +1,5 @@
 {
-  "name": "@smartfridge/client",
+  "name": "@home-dashboard/client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -19,9 +19,9 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@smartfridge/api-schema": "workspace:*",
-    "@smartfridge/eslint-config": "workspace:*",
-    "@smartfridge/typescript-config": "workspace:*",
+    "@home-dashboard/api-schema": "workspace:*",
+    "@home-dashboard/eslint-config": "workspace:*",
+    "@home-dashboard/typescript-config": "workspace:*",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

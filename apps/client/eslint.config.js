@@ -1,1 +1,1 @@
-export { default } from "@smartfridge/eslint-config/react.js"
+export { default } from "@home-dashboard/eslint-config/react.js"

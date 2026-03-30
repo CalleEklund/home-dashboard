@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react"
+import * as settingsApi from "../../../kernel/api/settings"
 
 type Departure = {
   line: string
@@ -36,7 +37,6 @@ type Settings = {
   count: number
 }
 
-const STORAGE_KEY = "fridge_departures_settings"
 const POLL_INTERVAL = 30_000
 
 const MODE_ICONS: Record<string, string> = {
@@ -48,10 +48,6 @@ const MODE_ICONS: Record<string, string> = {
 }
 
 function loadSettings(): Settings {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (raw) return JSON.parse(raw)
-  } catch { /* ignore */ }
   return { siteId: null, siteName: "", count: 5 }
 }
 
@@ -129,8 +125,23 @@ export default function Departures() {
   const [lastFetched, setLastFetched] = useState<Date | null>(null)
   const [showSettings, setShowSettings] = useState(false)
 
+  // Load from server
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings))
+    settingsApi.getSettings().then((s) => {
+      if (s.departuresSiteId) {
+        setSettings({ siteId: s.departuresSiteId, siteName: s.departuresSiteName, count: s.departuresCount })
+      }
+    }).catch(() => {})
+  }, [])
+
+  // Save to server on change
+  useEffect(() => {
+    if (!settings.siteId) return
+    settingsApi.updateSettings({
+      departuresSiteId: settings.siteId,
+      departuresSiteName: settings.siteName,
+      departuresCount: settings.count,
+    }).catch(() => {})
   }, [settings])
 
   useEffect(() => {

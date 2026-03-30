@@ -15,7 +15,7 @@ Run both `pnpm dev` and `pnpm server` for full functionality (ICA widget needs t
 
 ## Architecture
 
-pnpm workspaces monorepo. Kiosk-mode dashboard for a Raspberry Pi touchscreen.
+pnpm workspaces monorepo. Dashboard web app deployed on Railway.
 
 ```
 apps/
@@ -74,4 +74,4 @@ Catppuccin Mocha palette via Tailwind arbitrary values — no custom theme token
 
 ## TypeScript
 
-`verbatimModuleSyntax` is enabled — use `import type` for type-only imports. The tsconfig uses project references (`tsconfig.app.json` for src, `tsconfig.node.json` for vite config), both extending shared configs from `@smartfridge/typescript-config`.
+`verbatimModuleSyntax` is enabled — use `import type` for type-only imports. The tsconfig uses project references (`tsconfig.app.json` for src, `tsconfig.node.json` for vite config), both extending shared configs from `@home-dashboard/typescript-config`.

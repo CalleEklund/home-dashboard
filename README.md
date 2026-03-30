@@ -1,6 +1,6 @@
 # SmartFridge
 
-A kiosk-mode dashboard for a Raspberry Pi touchscreen (or any tablet). Built as a pnpm workspaces monorepo with a React frontend and NestJS backend.
+A customizable dashboard web app deployed on [Railway](https://railway.app). Built as a pnpm workspaces monorepo with a React frontend and NestJS backend.
 
 ## Features
 
@@ -47,6 +47,15 @@ pnpm docker:up       # start headless Chrome (needed for ICA BankID login)
 pnpm server          # NestJS on localhost:3001
 pnpm client          # Vite dev server on localhost:5173
 ```
+
+## Deployment
+
+The app is deployed on **Railway** as two services:
+
+- **Client** — static Vite build served by the NestJS server (or a standalone static host)
+- **Server** — NestJS API server
+
+Railway auto-deploys from the `main` branch. Each service uses its own build/start commands configured in Railway's dashboard.
 
 ## Scripts
 

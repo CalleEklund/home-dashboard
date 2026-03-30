@@ -1,4 +1,4 @@
-name: smartfridge
+name: home-dashboard
 
 services:
   chrome:
@@ -9,3 +9,26 @@ services:
     environment:
       - TIMEOUT=300000
       - CONCURRENT=2
+
+  postgres:
+    image: postgres:17
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: home-dashboard
+      POSTGRES_USER: home-dashboard
+      POSTGRES_PASSWORD: home-dashboard
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  pgdata:

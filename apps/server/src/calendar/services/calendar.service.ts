@@ -13,22 +13,20 @@ export class CalendarService {
 
   constructor(private readonly feedPort: CalendarFeedPort) {}
 
-  getFeeds(): CalendarFeed[] {
+  async getFeeds(): Promise<CalendarFeed[]> {
     return this.feedPort.getFeeds();
   }
 
   async addFeed(personName: string, color: string, icsUrl: string): Promise<CalendarFeed> {
-    // Validate URL by attempting a fetch
-    const feed = this.feedPort.addFeed(personName, color, icsUrl);
-    // Invalidate cache so next getEvents picks up the new feed
+    const feed = await this.feedPort.addFeed(personName, color, icsUrl);
     this.lastFetch = 0;
     return feed;
   }
 
-  removeFeed(id: string): void {
-    this.feedPort.removeFeed(id);
+  async removeFeed(id: string): Promise<void> {
+    await this.feedPort.removeFeed(id);
+    const feeds = await this.feedPort.getFeeds();
     this.cache = this.cache.filter((e) => {
-      const feeds = this.feedPort.getFeeds();
       return feeds.some((f) => f.personName === e.personName);
     });
     this.lastFetch = 0;
@@ -39,7 +37,7 @@ export class CalendarService {
       return this.cache;
     }
 
-    const feeds = this.feedPort.getFeeds();
+    const feeds = await this.feedPort.getFeeds();
     const allEvents: CalendarEvent[] = [];
 
     const results = await Promise.allSettled(

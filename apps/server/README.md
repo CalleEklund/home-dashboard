@@ -1,4 +1,4 @@
-# @smartfridge/server
+# @home-dashboard/server
 
 NestJS API server that proxies external APIs and serves data to the client.
 
