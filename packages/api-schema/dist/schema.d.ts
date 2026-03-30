@@ -195,6 +195,102 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SettingsController_getSettings"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["SettingsController_updateSettings"];
+        trace?: never;
+    };
+    "/api/pages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SettingsController_getPages"];
+        put: operations["SettingsController_setPages"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/lock-layout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SettingsController_getLockLayout"];
+        put: operations["SettingsController_setLockLayout"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SettingsController_getNotes"];
+        put: operations["SettingsController_setNotes"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/planner/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SettingsController_getTasks"];
+        put?: never;
+        post: operations["SettingsController_addTask"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/planner/tasks/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["SettingsController_updateTask"];
+        post?: never;
+        delete: operations["SettingsController_deleteTask"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -774,6 +870,609 @@ export interface operations {
                         personName: string;
                         color: string;
                     }[];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_getSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        lockTimeoutMins: number;
+                        departuresSiteId: number | null;
+                        departuresSiteName: string;
+                        departuresCount: number;
+                        icaListId: string | null;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_updateSettings: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    lockTimeoutMins?: number;
+                    departuresSiteId?: number | null;
+                    departuresSiteName?: string;
+                    departuresCount?: number;
+                    icaListId?: string | null;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        lockTimeoutMins: number;
+                        departuresSiteId: number | null;
+                        departuresSiteName: string;
+                        departuresCount: number;
+                        icaListId: string | null;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_getPages: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        name: string;
+                        position: number;
+                        layout: ({
+                            id: string;
+                            colStart: number;
+                            rowStart: number;
+                            colSpan: number;
+                            rowSpan: number;
+                        } & {
+                            [key: string]: unknown;
+                        })[];
+                    }[];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_setPages: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    id?: string;
+                    name: string;
+                    position: number;
+                    layout: ({
+                        id: string;
+                        colStart: number;
+                        rowStart: number;
+                        colSpan: number;
+                        rowSpan: number;
+                    } & {
+                        [key: string]: unknown;
+                    })[];
+                }[];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        name: string;
+                        position: number;
+                        layout: ({
+                            id: string;
+                            colStart: number;
+                            rowStart: number;
+                            colSpan: number;
+                            rowSpan: number;
+                        } & {
+                            [key: string]: unknown;
+                        })[];
+                    }[];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_getLockLayout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        layout: ({
+                            id: string;
+                            colStart: number;
+                            rowStart: number;
+                            colSpan: number;
+                            rowSpan: number;
+                        } & {
+                            [key: string]: unknown;
+                        })[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_setLockLayout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    layout: ({
+                        id: string;
+                        colStart: number;
+                        rowStart: number;
+                        colSpan: number;
+                        rowSpan: number;
+                    } & {
+                        [key: string]: unknown;
+                    })[];
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        layout: ({
+                            id: string;
+                            colStart: number;
+                            rowStart: number;
+                            colSpan: number;
+                            rowSpan: number;
+                        } & {
+                            [key: string]: unknown;
+                        })[];
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_getNotes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        name: string;
+                        notes: {
+                            id: string;
+                            text: string;
+                        }[];
+                    }[];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_setNotes: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    id?: string;
+                    name: string;
+                    notes: {
+                        id: string;
+                        text: string;
+                    }[];
+                }[];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        name: string;
+                        notes: {
+                            id: string;
+                            text: string;
+                        }[];
+                    }[];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_getTasks: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        text: string;
+                        days: string[];
+                        color: string;
+                        recurrence: string;
+                        createdWeek: string;
+                    }[];
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_addTask: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    text: string;
+                    days: string[];
+                    color: string;
+                    recurrence: string;
+                    createdWeek: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        text: string;
+                        days: string[];
+                        color: string;
+                        recurrence: string;
+                        createdWeek: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_updateTask: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    text?: string;
+                    days?: string[];
+                    color?: string;
+                    recurrence?: string;
+                    createdWeek?: string;
+                };
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        id: string;
+                        text: string;
+                        days: string[];
+                        color: string;
+                        recurrence: string;
+                        createdWeek: string;
+                    };
+                };
+            };
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        code: "INVALID_BODY";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_PATH_PARAMETER";
+                    } | {
+                        /** @enum {string} */
+                        code: "INVALID_QUERY_PARAMETER";
+                    };
+                };
+            };
+        };
+    };
+    SettingsController_deleteTask: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        ok: boolean;
+                    };
                 };
             };
             400: {

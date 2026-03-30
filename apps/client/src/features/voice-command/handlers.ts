@@ -1,6 +1,5 @@
 import type { Intent } from "./intents"
-
-const ICA_API = "http://localhost:3001/api/ica"
+import { fetchClient } from "../../kernel/api"
 
 const WMO_LABELS: Record<number, string> = {
   0: "clear sky",
@@ -40,9 +39,8 @@ async function handleWeather(): Promise<string> {
 }
 
 async function handleDepartures(): Promise<string> {
-  const settingsRes = await fetch("http://localhost:3001/api/settings")
-  if (!settingsRes.ok) return "Could not fetch settings."
-  const settings = await settingsRes.json()
+  const { data: settings, error } = await fetchClient.GET("/api/settings")
+  if (error || !settings) return "Could not fetch settings."
   if (!settings.departuresSiteId) return "No departure stop configured."
 
   const res = await fetch(
@@ -62,10 +60,8 @@ async function handleDepartures(): Promise<string> {
 }
 
 async function handleCalendar(): Promise<string> {
-  const res = await fetch("http://localhost:3001/api/calendar/events")
-  if (!res.ok) return "Could not fetch calendar events."
-  const events: { summary: string; start: string; allDay: boolean; personName: string }[] =
-    await res.json()
+  const { data: events, error } = await fetchClient.GET("/api/calendar/events")
+  if (error || !events) return "Could not fetch calendar events."
 
   const now = new Date()
   const endOfDay = new Date(now)
@@ -91,18 +87,16 @@ async function handleCalendar(): Promise<string> {
 }
 
 async function handleShoppingAdd(item: string): Promise<string> {
-  const settingsRes = await fetch("http://localhost:3001/api/settings")
-  if (!settingsRes.ok) return "Could not fetch settings."
-  const settings = await settingsRes.json()
+  const { data: settings, error: settingsError } = await fetchClient.GET("/api/settings")
+  if (settingsError || !settings) return "Could not fetch settings."
   const listId = settings.icaListId
   if (!listId) return "No shopping list selected."
 
-  const res = await fetch(`${ICA_API}/lists/${listId}/items`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ text: item }),
+  const { error } = await fetchClient.POST("/api/ica/lists/{listId}/items", {
+    params: { path: { listId } },
+    body: { text: item },
   })
-  if (!res.ok) return `Failed to add "${item}" to the list.`
+  if (error) return `Failed to add "${item}" to the list.`
   return `Added "${item}" to the shopping list.`
 }
 

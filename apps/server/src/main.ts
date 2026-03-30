@@ -16,11 +16,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  // Write spec to shared package for type generation
-  const specPath = path.resolve(__dirname, '../../../packages/api-schema/open-api-spec.json');
-  fs.mkdirSync(path.dirname(specPath), { recursive: true });
-  fs.writeFileSync(specPath, JSON.stringify(document, null, 2));
+  // Write spec to shared package for type generation (dev only)
+  if (!process.env.RAILWAY_ENVIRONMENT) {
+    const specPath = path.resolve(__dirname, '../../../packages/api-schema/open-api-spec.json');
+    fs.mkdirSync(path.dirname(specPath), { recursive: true });
+    fs.writeFileSync(specPath, JSON.stringify(document, null, 2));
+  }
 
-  await app.listen(3001);
+  await app.listen(process.env.PORT ?? 3001);
 }
 bootstrap();
