@@ -9,8 +9,8 @@ async function bootstrap() {
   app.enableCors({ origin: true });
 
   const config = new DocumentBuilder()
-    .setTitle('SmartFridge API')
-    .setVersion('1.0')
+    .setTitle("home-dashboard API")
+    .setVersion("1.0")
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
