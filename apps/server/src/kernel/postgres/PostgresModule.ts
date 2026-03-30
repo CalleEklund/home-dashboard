@@ -20,6 +20,7 @@ export class PostgresModule {
     };
     return {
       module: PostgresModule,
+      imports: options.imports ?? [],
       providers: [optionsProvider, PostgresPoolEnder, PostgresPoolProvider()],
       exports: [PostgresPoolProvider()],
       global: true,

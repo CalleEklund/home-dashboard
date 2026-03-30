@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
+    "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-express": "^11.0.0",
     "@nestjs/swagger": "^11.2.6",
@@ -24,8 +25,8 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.0",
     "@home-dashboard/typescript-config": "workspace:*",
+    "@nestjs/cli": "^11.0.0",
     "@types/express": "^5.0.0",
     "@types/node": "^24.0.0",
     "@types/pg": "^8.20.0",

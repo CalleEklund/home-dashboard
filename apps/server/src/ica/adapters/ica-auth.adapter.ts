@@ -1,4 +1,5 @@
 import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import puppeteer from 'puppeteer-core';
 import type { Browser, Page } from 'puppeteer-core';
 import { IcaAuthPort } from '../ports/ica-auth.port';
@@ -6,7 +7,6 @@ import type { AuthPollResult } from '../ports/ica-auth.port';
 
 const LOGIN_URL = 'https://www.ica.se/logga-in/';
 const USER_INFO_URL = 'https://www.ica.se/api/user/information';
-const CHROME_WS = process.env.CHROME_WS_ENDPOINT ?? 'ws://localhost:3002';
 const CHROME_UA =
   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
 
@@ -15,6 +15,12 @@ type BrowserSession = { browser: Browser; page: Page };
 @Injectable()
 export class IcaAuthAdapter extends IcaAuthPort {
   private readonly logger = new Logger(IcaAuthAdapter.name);
+  private readonly chromeWs: string;
+
+  constructor(private readonly config: ConfigService) {
+    super();
+    this.chromeWs = this.config.getOrThrow<string>('CHROME_WS_ENDPOINT');
+  }
   private accessToken: string | null = null;
   private sessionId: string | null = null;
   private session: BrowserSession | null = null;
@@ -69,7 +75,7 @@ export class IcaAuthAdapter extends IcaAuthPort {
   async startLogin(): Promise<{ qrCode: string }> {
     await this.closeSession();
 
-    const browser = await puppeteer.connect({ browserWSEndpoint: CHROME_WS });
+    const browser = await puppeteer.connect({ browserWSEndpoint: this.chromeWs });
     const page = await browser.newPage();
     await page.setUserAgent(CHROME_UA);
 
