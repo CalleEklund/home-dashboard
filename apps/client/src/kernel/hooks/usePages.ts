@@ -12,7 +12,7 @@ export type DashboardPage = {
 };
 
 const DEFAULT_PAGES: DashboardPage[] = [
-  { id: "default", name: "Home", layout: DEFAULT_LAYOUT },
+  { id: crypto.randomUUID(), name: "Home", layout: DEFAULT_LAYOUT },
 ];
 
 export function usePages() {

@@ -1,7 +1,19 @@
 import { useState, useCallback, useEffect } from "react"
 import { useSpeechRecognition } from "./useSpeechRecognition"
-import { parseIntent } from "./intents"
+import { classifyIntent } from "./intents";
 import { handleIntent } from "./handlers"
+
+function speak(text: string, lang = "en-US") {
+  const utterance = new SpeechSynthesisUtterance(text)
+  utterance.lang = lang
+  const voices = speechSynthesis.getVoices()
+  const match =
+    voices.find(v => v.lang === lang && !v.localService) ??
+    voices.find(v => v.lang === lang) ??
+    voices.find(v => v.lang.startsWith(lang.split("-")[0]))
+  if (match) utterance.voice = match
+  speechSynthesis.speak(utterance)
+}
 
 export default function VoiceButton() {
   const { listening, listen, stop, isSupported } = useSpeechRecognition("sv-SE")
@@ -25,12 +37,10 @@ export default function VoiceButton() {
     try {
       const transcript = await listen()
       setProcessing(true)
-      const intent = parseIntent(transcript)
+      const intent = await classifyIntent(transcript);
       const result = await handleIntent(intent)
       setResponse(result)
-      const utterance = new SpeechSynthesisUtterance(result)
-      utterance.lang = "en-US"
-      speechSynthesis.speak(utterance)
+      speak(result, intent.lang)
     } catch (err) {
       if (err instanceof Error && err.message === "no-speech") {
         setResponse("I didn't hear anything. Try again.")
@@ -56,7 +66,7 @@ export default function VoiceButton() {
       {/* Mic button */}
       <button
         onClick={handleTap}
-        className={`flex h-14 w-14 items-center justify-center rounded-full shadow-lg transition-all active:scale-95 ${
+        className={`flex size-14 items-center justify-center rounded-full shadow-lg transition-all active:scale-95 ${
           listening
             ? "animate-pulse bg-[#f38ba8]"
             : "bg-[#89b4fa] hover:bg-[#89b4fa]/80"
@@ -66,12 +76,12 @@ export default function VoiceButton() {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="currentColor"
-          className="h-6 w-6 text-[#181825]"
+          className="size-6 text-[#181825]"
         >
           <path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4Z" />
           <path d="M6 11a1 1 0 1 0-2 0 8 8 0 0 0 7 7.93V21H8a1 1 0 1 0 0 2h8a1 1 0 1 0 0-2h-3v-2.07A8 8 0 0 0 20 11a1 1 0 1 0-2 0 6 6 0 0 1-12 0Z" />
         </svg>
       </button>
     </div>
-  )
+  );
 }

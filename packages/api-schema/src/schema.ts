@@ -361,6 +361,12 @@ export interface operations {
                     };
                 };
             };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -440,6 +446,12 @@ export interface operations {
                     };
                 };
             };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -477,6 +489,12 @@ export interface operations {
                         ok: boolean;
                     };
                 };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             400: {
                 headers: {
@@ -572,6 +590,12 @@ export interface operations {
                     };
                 };
             };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -657,6 +681,12 @@ export interface operations {
                         ok: boolean;
                     };
                 };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             400: {
                 headers: {
@@ -787,6 +817,12 @@ export interface operations {
                         icsUrl: string;
                     };
                 };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             400: {
                 headers: {
@@ -1380,6 +1416,12 @@ export interface operations {
                         createdWeek: string;
                     };
                 };
+            };
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             400: {
                 headers: {

@@ -9,6 +9,7 @@
     "migrate": "atlas migrate apply --env local"
   },
   "dependencies": {
+    "@google/genai": "^1.47.0",
     "@nestjs/common": "^11.0.0",
     "@nestjs/config": "^4.0.3",
     "@nestjs/core": "^11.0.0",

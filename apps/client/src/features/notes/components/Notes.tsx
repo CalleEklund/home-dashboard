@@ -4,11 +4,12 @@ import * as settingsApi from "../../../kernel/api/settings"
 type Note = { id: string; text: string }
 type NoteList = { id: string; name: string; notes: Note[] }
 
-const DEFAULT_LISTS: NoteList[] = [{ id: "default", name: "Notes", notes: [] }]
+const DEFAULT_ID = crypto.randomUUID()
+const DEFAULT_LISTS: NoteList[] = [{ id: DEFAULT_ID, name: "Notes", notes: [] }]
 
 export default function Notes() {
   const [lists, setLists] = useState<NoteList[]>(DEFAULT_LISTS)
-  const [activeListId, setActiveListId] = useState("default")
+  const [activeListId, setActiveListId] = useState<string>(DEFAULT_ID)
   const [input, setInput] = useState("")
   const [renaming, setRenaming] = useState<string | null>(null)
   const [renameValue, setRenameValue] = useState("")

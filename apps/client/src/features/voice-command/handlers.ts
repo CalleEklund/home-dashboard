@@ -110,6 +110,8 @@ export async function handleIntent(intent: Intent): Promise<string> {
       return handleCalendar()
     case "shopping-add":
       return handleShoppingAdd(intent.item)
+    case "general-query":
+      return intent.answer
     case "unknown":
       return `I didn't understand: "${intent.transcript}"`
   }

@@ -126,6 +126,9 @@
               }
             }
           },
+          "201": {
+            "description": ""
+          },
           "400": {
             "description": "",
             "content": {
@@ -337,6 +340,9 @@
               }
             }
           },
+          "201": {
+            "description": ""
+          },
           "400": {
             "description": "",
             "content": {
@@ -434,6 +440,9 @@
                 }
               }
             }
+          },
+          "201": {
+            "description": ""
           },
           "400": {
             "description": "",
@@ -734,6 +743,9 @@
               }
             }
           },
+          "201": {
+            "description": ""
+          },
           "400": {
             "description": "",
             "content": {
@@ -973,6 +985,9 @@
                 }
               }
             }
+          },
+          "201": {
+            "description": ""
           },
           "400": {
             "description": "",
@@ -1351,6 +1366,9 @@
                 }
               }
             }
+          },
+          "201": {
+            "description": ""
           },
           "400": {
             "description": "",
@@ -3283,6 +3301,9 @@
               }
             }
           },
+          "201": {
+            "description": ""
+          },
           "400": {
             "description": "",
             "content": {
@@ -3648,6 +3669,38 @@
           "Settings"
         ]
       }
+    },
+    "/api/voice/classify": {
+      "post": {
+        "operationId": "VoiceController_classify",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClassifyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Classify a voice transcript into an intent",
+        "tags": [
+          "voice"
+        ]
+      }
     }
   },
   "info": {
@@ -3659,6 +3712,11 @@
   "tags": [],
   "servers": [],
   "components": {
-    "schemas": {}
+    "schemas": {
+      "ClassifyDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
   }
 }
