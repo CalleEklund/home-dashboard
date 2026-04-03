@@ -14,3 +14,8 @@ COPY apps/client/ apps/client/
 ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 RUN pnpm --filter @home-dashboard/api-schema build && pnpm --filter @home-dashboard/client build
+
+FROM base AS runtime
+RUN npm install -g serve
+COPY --from=build /app/apps/client/dist /app/dist
+CMD ["serve", "-s", "/app/dist", "-l", "3000"]
