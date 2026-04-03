@@ -2,7 +2,7 @@ export type Intent = {
   lang?: string
 } & (
   | { type: "shopping-add"; item: string }
-  | { type: "weather-query" }
+  | { type: "weather-query"; date?: string | null }
   | { type: "departures-query" }
   | { type: "calendar-query" }
   | { type: "general-query"; answer: string }

@@ -3,7 +3,7 @@ import { useSpeechRecognition } from "./useSpeechRecognition"
 import { classifyIntent } from "./intents";
 import { handleIntent } from "./handlers"
 
-function speak(text: string, lang = "en-US") {
+function speak(text: string, lang = "sv-SE") {
   const utterance = new SpeechSynthesisUtterance(text)
   utterance.lang = lang
   const voices = speechSynthesis.getVoices()
@@ -40,12 +40,12 @@ export default function VoiceButton() {
       const intent = await classifyIntent(transcript);
       const result = await handleIntent(intent)
       setResponse(result)
-      speak(result, intent.lang)
+      speak(result, intent.lang ?? "sv-SE")
     } catch (err) {
       if (err instanceof Error && err.message === "no-speech") {
-        setResponse("I didn't hear anything. Try again.")
+        setResponse("Jag hörde inget. / I didn't hear anything.")
       } else if (err instanceof Error && err.message === "not-allowed") {
-        setResponse("Microphone access denied.")
+        setResponse("Mikrofonen är blockerad. / Microphone blocked.")
       }
     } finally {
       setProcessing(false)
@@ -59,7 +59,7 @@ export default function VoiceButton() {
       {/* Response bubble */}
       {(response || processing) && (
         <div className="max-w-xs rounded-xl bg-[#313244] px-4 py-3 text-sm text-[#cdd6f4] shadow-lg">
-          {processing ? "Thinking..." : response}
+          {processing ? "..." : response}
         </div>
       )}
 

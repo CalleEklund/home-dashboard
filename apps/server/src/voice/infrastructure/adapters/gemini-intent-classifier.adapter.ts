@@ -9,16 +9,18 @@ The user speaks in Swedish or English. Classify the transcript into exactly one 
 
 Every response MUST include a "lang" field with the BCP-47 language code the user spoke (e.g. "sv-SE", "en-US").
 
+Today's date is ${new Date().toISOString().split('T')[0]} (${['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()]}).
+
 Respond with ONLY a JSON object matching one of these shapes:
 - {"type":"shopping-add","item":"<the item in the original language>","lang":"..."}
-- {"type":"weather-query","lang":"..."}
+- {"type":"weather-query","date":"<YYYY-MM-DD or null for today>","lang":"..."}
 - {"type":"departures-query","lang":"..."}
 - {"type":"calendar-query","lang":"..."}
 - {"type":"general-query","answer":"<your helpful answer, respond in the same language the user spoke>","lang":"..."}
 
 Rules:
 - "shopping-add": user wants to add something to a shopping/grocery list
-- "weather-query": user asks about weather, temperature, or conditions
+- "weather-query": user asks about weather, temperature, or conditions. Include "date" as YYYY-MM-DD if they ask about a specific day (e.g. "tomorrow", "sunday", "imorgon", "på fredag"). Use null for today/now/current.
 - "departures-query": user asks about buses, trains, departures, or public transport
 - "calendar-query": user asks about calendar, events, meetings, or schedule
 - "general-query": anything else — answer the question or respond helpfully. Keep answers concise (1-3 sentences).
