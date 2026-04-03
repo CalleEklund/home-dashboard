@@ -35,6 +35,12 @@ type Settings = {
   siteId: number | null
   siteName: string
   count: number
+  routes: string[] // "line→destination" pairs to show (empty = show all)
+}
+
+/** Unique key for a route */
+function routeKey(line: string, destination: string): string {
+  return `${line}→${destination}`
 }
 
 const POLL_INTERVAL = 30_000
@@ -45,10 +51,6 @@ const MODE_ICONS: Record<string, string> = {
   TRAM: "\u{1F68A}",
   TRAIN: "\u{1F686}",
   SHIP: "\u26F4\uFE0F",
-}
-
-function loadSettings(): Settings {
-  return { siteId: null, siteName: "", count: 5 }
 }
 
 function StopSearch({ onSelect }: { onSelect: (site: SiteResult) => void }) {
@@ -118,8 +120,133 @@ function StopSearch({ onSelect }: { onSelect: (site: SiteResult) => void }) {
   )
 }
 
+function RouteFilter({
+  siteId,
+  routes,
+  onChange,
+  collapsed,
+}: {
+  siteId: number
+  routes: string[]
+  onChange: (routes: string[]) => void
+  collapsed?: boolean
+}) {
+  const [expanded, setExpanded] = useState(!collapsed || routes.length > 0)
+  const [available, setAvailable] = useState<{ key: string; line: string; destination: string; mode: string }[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(true)
+    fetch(`https://transport.integration.sl.se/v1/sites/${siteId}/departures`)
+      .then((r) => r.json())
+      .then((data) => {
+        const seen = new Set<string>()
+        const result: { key: string; line: string; destination: string; mode: string }[] = []
+        for (const d of data.departures ?? []) {
+          const key = routeKey(d.line.designation, d.destination)
+          if (!seen.has(key)) {
+            seen.add(key)
+            result.push({
+              key,
+              line: d.line.designation,
+              destination: d.destination,
+              mode: d.line.transport_mode,
+            })
+          }
+        }
+        result.sort((a, b) => a.line.localeCompare(b.line, undefined, { numeric: true }) || a.destination.localeCompare(b.destination))
+        setAvailable(result)
+        setLoading(false)
+      })
+      .catch(() => setLoading(false))
+  }, [siteId])
+
+  const routeSet = new Set(routes)
+  const allSelected = routes.length === 0
+
+  const toggle = (key: string) => {
+    if (allSelected) {
+      // Switching from "show all" to specific: select everything except the toggled one
+      onChange(available.filter((r) => r.key !== key).map((r) => r.key))
+    } else if (routeSet.has(key)) {
+      const next = routes.filter((r) => r !== key)
+      // If nothing selected, revert to show all
+      onChange(next.length === 0 ? [] : next)
+    } else {
+      const next = [...routes, key]
+      // If all selected, revert to show all
+      onChange(next.length === available.length ? [] : next)
+    }
+  }
+
+  const filterLabel = allSelected
+    ? "Showing all routes"
+    : `Showing ${routes.length} of ${available.length} routes`
+
+  if (!expanded) {
+    return (
+      <button
+        className="flex items-center justify-between rounded-lg bg-[#313244] px-3 py-2 text-left"
+        onClick={() => setExpanded(true)}
+        onPointerDown={(e) => e.stopPropagation()}
+      >
+        <span className="text-sm text-[#cdd6f4]">Filter routes</span>
+        <span className="text-xs text-[#6c7086]">{loading ? "" : filterLabel}</span>
+      </button>
+    )
+  }
+
+  if (loading) {
+    return <div className="text-xs text-[#6c7086]">Loading routes...</div>
+  }
+
+  if (available.length === 0) {
+    return <div className="text-xs text-[#6c7086]">No departures found</div>
+  }
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className="flex items-center justify-between">
+        <div className="text-sm text-[#a6adc8]">Filter routes</div>
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] text-[#6c7086]">{filterLabel}</span>
+          <button
+            className="text-xs text-[#89b4fa] transition-transform active:scale-95"
+            onClick={() => onChange([])}
+            onPointerDown={(e) => e.stopPropagation()}
+          >
+            {allSelected ? "All" : "Reset"}
+          </button>
+        </div>
+      </div>
+      <div className="max-h-48 space-y-1 overflow-y-auto">
+        {available.map((r) => {
+          const selected = allSelected || routeSet.has(r.key)
+          return (
+            <button
+              key={r.key}
+              className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors ${
+                selected ? "bg-[#313244]" : "bg-[#313244]/30 opacity-50"
+              }`}
+              onClick={() => toggle(r.key)}
+              onPointerDown={(e) => e.stopPropagation()}
+            >
+              <span className="text-base">{MODE_ICONS[r.mode] ?? ""}</span>
+              <span className="w-10 shrink-0 font-bold text-[#89b4fa]">{r.line}</span>
+              <span className="min-w-0 flex-1 truncate text-[#cdd6f4]">{r.destination}</span>
+              <span className={`text-xs ${selected ? "text-[#a6e3a1]" : "text-[#6c7086]"}`}>
+                {selected ? "✓" : "off"}
+              </span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export default function Departures() {
-  const [settings, setSettings] = useState<Settings>(loadSettings)
+  const [settings, setSettings] = useState<Settings>({ siteId: null, siteName: "", count: 5, routes: [] })
   const [departures, setDepartures] = useState<Departure[]>([])
   const [error, setError] = useState(false)
   const [lastFetched, setLastFetched] = useState<Date | null>(null)
@@ -129,7 +256,12 @@ export default function Departures() {
   useEffect(() => {
     settingsApi.getSettings().then((s) => {
       if (s.departuresSiteId) {
-        setSettings({ siteId: s.departuresSiteId, siteName: s.departuresSiteName, count: s.departuresCount })
+        setSettings({
+          siteId: s.departuresSiteId,
+          siteName: s.departuresSiteName,
+          count: s.departuresCount,
+          routes: s.departuresRoutes ?? [],
+        })
       }
     }).catch(() => {})
   }, [])
@@ -141,6 +273,7 @@ export default function Departures() {
       departuresSiteId: settings.siteId,
       departuresSiteName: settings.siteName,
       departuresCount: settings.count,
+      departuresRoutes: settings.routes,
     }).catch(() => {})
   }, [settings])
 
@@ -156,8 +289,14 @@ export default function Departures() {
         )
         const data = await res.json()
         if (cancelled) return
+        const routeSet = new Set(settings.routes)
+        const hasFilter = settings.routes.length > 0
         const deps: Departure[] = (data.departures ?? [])
-          .filter((d: { state: string }) => d.state !== "CANCELLED")
+          .filter((d: { state: string; line: { designation: string }; destination: string }) => {
+            if (d.state === "CANCELLED") return false
+            if (hasFilter && !routeSet.has(routeKey(d.line.designation, d.destination))) return false
+            return true
+          })
           .slice(0, settings.count)
           .map((d: {
             line: { designation: string; transport_mode: string }
@@ -185,11 +324,11 @@ export default function Departures() {
       cancelled = true
       clearInterval(id)
     }
-  }, [settings.siteId, settings.count])
+  }, [settings.siteId, settings.count, settings.routes])
 
   if (!settings.siteId || showSettings) {
     return (
-      <div className="flex h-full flex-col gap-3 p-4">
+      <div className="flex h-full flex-col gap-3 overflow-y-auto p-4">
         <div className="flex items-center justify-between">
           <div className="text-sm font-medium text-[#a6adc8]">Settings</div>
           {settings.siteId && (
@@ -218,10 +357,20 @@ export default function Departures() {
           </select>
         </div>
 
+        {/* Route filter (collapsible, only when a stop is selected) */}
+        {settings.siteId && (
+          <RouteFilter
+            siteId={settings.siteId}
+            routes={settings.routes}
+            onChange={(routes) => setSettings((s) => ({ ...s, routes }))}
+            collapsed
+          />
+        )}
+
         {/* Stop search */}
         <StopSearch
           onSelect={(site) => {
-            setSettings((s) => ({ ...s, siteId: site.id, siteName: site.name }))
+            setSettings((s) => ({ ...s, siteId: site.id, siteName: site.name, routes: [] }))
             setShowSettings(false)
           }}
         />

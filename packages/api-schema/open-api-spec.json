@@ -1731,6 +1731,16 @@
                         "number"
                       ]
                     },
+                    "departuresRoutes": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "string"
+                        ]
+                      }
+                    },
                     "icaListId": {
                       "type": [
                         "string",
@@ -1743,6 +1753,7 @@
                     "departuresSiteId",
                     "departuresSiteName",
                     "departuresCount",
+                    "departuresRoutes",
                     "icaListId"
                   ]
                 }
@@ -1852,6 +1863,16 @@
                       "number"
                     ]
                   },
+                  "departuresRoutes": {
+                    "type": [
+                      "array"
+                    ],
+                    "items": {
+                      "type": [
+                        "string"
+                      ]
+                    }
+                  },
                   "icaListId": {
                     "type": [
                       "string",
@@ -1894,6 +1915,16 @@
                         "number"
                       ]
                     },
+                    "departuresRoutes": {
+                      "type": [
+                        "array"
+                      ],
+                      "items": {
+                        "type": [
+                          "string"
+                        ]
+                      }
+                    },
                     "icaListId": {
                       "type": [
                         "string",
@@ -1906,6 +1937,7 @@
                     "departuresSiteId",
                     "departuresSiteName",
                     "departuresCount",
+                    "departuresRoutes",
                     "icaListId"
                   ]
                 }

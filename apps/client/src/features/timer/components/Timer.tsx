@@ -119,7 +119,7 @@ export default function Timer() {
   if (state === "done") {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-4 p-4">
-        <div className="animate-pulse text-4xl font-bold text-[#f38ba8]">
+        <div className="animate-pulse text-3xl font-bold text-[#f38ba8] sm:text-4xl">
           00:00
         </div>
         <div className="text-sm text-[#a6adc8]">Time&apos;s up!</div>
@@ -147,7 +147,7 @@ export default function Timer() {
         </div>
 
         <div
-          className={`text-4xl font-bold tabular-nums ${state === "paused" ? "text-[#fab387]" : "text-[#cdd6f4]"}`}
+          className={`text-3xl font-bold tabular-nums sm:text-4xl ${state === "paused" ? "text-[#fab387]" : "text-[#cdd6f4]"}`}
         >
           {formatDisplay(remaining)}
         </div>
@@ -192,7 +192,7 @@ export default function Timer() {
       <div className="text-sm font-medium text-[#a6adc8]">Timer</div>
 
       {/* Presets */}
-      <div className="grid grid-cols-3 gap-2">
+      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
         {PRESETS.map((p) => (
           <button
             key={p.seconds}

@@ -46,6 +46,7 @@ export default function App() {
   }
 
   const activeOps = editingLockScreen ? lockLayout : pagesState
+  const reorderWidgets = activeOps.reorderWidgets
 
   return (
     <>
@@ -64,6 +65,7 @@ export default function App() {
             layout={activeOps.layout}
             onAdd={activeOps.addWidget}
             onRemove={activeOps.removeWidget}
+            onReorder={reorderWidgets}
             onReset={activeOps.resetLayout}
             settingsPageProps={{
               pages: pagesState.pages,
@@ -90,6 +92,7 @@ export default function App() {
             layout={activeOps.layout}
             onAdd={activeOps.addWidget}
             onRemove={activeOps.removeWidget}
+            onReorder={reorderWidgets}
             onReset={activeOps.resetLayout}
             settingsPageProps={{
               pages: pagesState.pages,

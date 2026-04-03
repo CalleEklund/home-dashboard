@@ -10,6 +10,7 @@ const SettingsRowSchema = z.object({
   departures_site_id: z.number().nullable(),
   departures_site_name: z.string(),
   departures_count: z.number(),
+  departures_routes: z.array(z.any()),
   ica_list_id: z.string().nullable(),
 });
 
@@ -75,6 +76,9 @@ export class SettingsPgAdapter extends SettingsPort {
     }
     if (partial.departuresCount !== undefined) {
       fragments.push(sql.fragment`departures_count = ${partial.departuresCount}`);
+    }
+    if (partial.departuresRoutes !== undefined) {
+      fragments.push(sql.fragment`departures_routes = ${JSON.stringify(partial.departuresRoutes)}::jsonb`);
     }
     if (partial.icaListId !== undefined) {
       fragments.push(sql.fragment`ica_list_id = ${partial.icaListId ?? null}`);
@@ -222,6 +226,7 @@ export class SettingsPgAdapter extends SettingsPort {
       row.departures_site_id,
       row.departures_site_name,
       row.departures_count,
+      row.departures_routes as string[],
       row.ica_list_id,
     );
   }

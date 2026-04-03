@@ -41,22 +41,22 @@ export default function SettingsPage({
   }
 
   return (
-    <div className="flex h-full items-start justify-center p-8">
-      <div className="w-full max-w-md space-y-6">
-        <h2 className="text-lg font-semibold text-[#cdd6f4]">Settings</h2>
+    <div className="flex h-full items-start justify-center p-4 sm:p-8">
+      <div className="w-full max-w-md space-y-4 sm:space-y-6">
+        <h2 className="text-base font-semibold text-[#cdd6f4] sm:text-lg">Settings</h2>
 
         {/* Pages section */}
         <div className="space-y-2">
           <div className="text-sm font-medium text-[#a6adc8]">Pages</div>
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             {pages.map((page, i) => (
               <div
                 key={page.id}
-                className="flex items-center gap-2 rounded-lg bg-[#1e1e2e] px-3 py-2"
+                className="flex items-center gap-2 rounded-lg bg-[#1e1e2e] px-3 py-2.5 sm:py-2"
               >
                 {renaming === i ? (
                   <input
-                    className="min-w-0 flex-1 rounded bg-[#313244] px-2 py-1 text-sm text-[#cdd6f4] outline-none"
+                    className="min-w-0 flex-1 rounded bg-[#313244] px-2 py-1.5 text-sm text-[#cdd6f4] outline-none sm:py-1"
                     value={renameValue}
                     onChange={(e) => setRenameValue(e.target.value)}
                     onKeyDown={(e) => {
@@ -69,14 +69,21 @@ export default function SettingsPage({
                   />
                 ) : (
                   <span
-                    className="min-w-0 flex-1 truncate text-sm text-[#cdd6f4] cursor-pointer"
+                    className="min-w-0 flex-1 cursor-pointer truncate text-sm text-[#cdd6f4]"
                     onDoubleClick={() => startRename(i)}
                   >
                     {page.name}
                   </span>
                 )}
                 <button
-                  className="shrink-0 rounded bg-[#89b4fa] px-2.5 py-1 text-xs font-bold text-[#181825] transition-transform active:scale-95"
+                  className="shrink-0 rounded bg-[#313244] px-2 py-1.5 text-xs text-[#6c7086] transition-transform active:scale-95 sm:py-1"
+                  onClick={() => startRename(i)}
+                  onPointerDown={(e) => e.stopPropagation()}
+                >
+                  ✏️
+                </button>
+                <button
+                  className="shrink-0 rounded bg-[#89b4fa] px-3 py-1.5 text-xs font-bold text-[#181825] transition-transform active:scale-95 sm:px-2.5 sm:py-1"
                   onClick={() => onEditPage(i)}
                   onPointerDown={(e) => e.stopPropagation()}
                 >
@@ -84,7 +91,7 @@ export default function SettingsPage({
                 </button>
                 {pages.length > 1 && (
                   <button
-                    className="shrink-0 text-sm text-[#f38ba8] transition-transform active:scale-90"
+                    className="shrink-0 px-1 text-lg text-[#f38ba8] transition-transform active:scale-90 sm:px-0 sm:text-sm"
                     onClick={() => onDeletePage(i)}
                     onPointerDown={(e) => e.stopPropagation()}
                   >
@@ -95,7 +102,7 @@ export default function SettingsPage({
             ))}
           </div>
           <button
-            className="rounded-lg bg-[#313244] px-3 py-2 text-sm text-[#89b4fa] transition-transform active:scale-95"
+            className="w-full rounded-lg bg-[#313244] px-3 py-2.5 text-sm text-[#89b4fa] transition-transform active:scale-95 sm:w-auto sm:py-2"
             onClick={() => onAddPage(`Page ${pages.length + 1}`)}
             onPointerDown={(e) => e.stopPropagation()}
           >
@@ -104,18 +111,18 @@ export default function SettingsPage({
         </div>
 
         {/* Lock screen section */}
-        <div className="space-y-2">
+        <div className="space-y-3 sm:space-y-2">
           <div className="text-sm font-medium text-[#a6adc8]">Lock Screen</div>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
             <button
-              className="rounded-lg bg-[#1e1e2e] px-3 py-2 text-sm text-[#cdd6f4] transition-transform active:scale-95"
+              className="rounded-lg bg-[#1e1e2e] px-3 py-2.5 text-sm text-[#cdd6f4] transition-transform active:scale-95 sm:py-2"
               onClick={onEditLockScreen}
               onPointerDown={(e) => e.stopPropagation()}
             >
               Edit Lock Screen Layout
             </button>
             <button
-              className="rounded-lg bg-[#1e1e2e] px-3 py-2 text-sm text-[#cdd6f4] transition-transform active:scale-95"
+              className="rounded-lg bg-[#1e1e2e] px-3 py-2.5 text-sm text-[#cdd6f4] transition-transform active:scale-95 sm:py-2"
               onClick={onLock}
               onPointerDown={(e) => e.stopPropagation()}
             >
@@ -125,7 +132,7 @@ export default function SettingsPage({
           <div className="flex items-center gap-2">
             <span className="text-sm text-[#a6adc8]">Inactivity timeout</span>
             <select
-              className="rounded-lg bg-[#1e1e2e] px-2 py-1.5 text-sm text-[#cdd6f4] outline-none"
+              className="rounded-lg bg-[#1e1e2e] px-2 py-2 text-sm text-[#cdd6f4] outline-none sm:py-1.5"
               value={timeoutMins}
               onChange={(e) => onTimeoutChange(Number(e.target.value))}
               onPointerDown={(e) => e.stopPropagation()}

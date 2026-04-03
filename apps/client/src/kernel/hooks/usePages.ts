@@ -90,6 +90,15 @@ export function usePages() {
     setActiveLayout((prev) => prev.filter((w) => w.id !== id));
   };
 
+  const reorderWidgets = (fromIndex: number, toIndex: number) => {
+    setActiveLayout((prev) => {
+      const next = [...prev];
+      const [moved] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, moved);
+      return next;
+    });
+  };
+
   const resetLayout = () => {
     setActiveLayout(() => DEFAULT_LAYOUT);
   };
@@ -128,6 +137,7 @@ export function usePages() {
     resizeWidget,
     addWidget,
     removeWidget,
+    reorderWidgets,
     resetLayout,
     addPage,
     deletePage,

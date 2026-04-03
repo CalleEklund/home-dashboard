@@ -19,6 +19,7 @@ export class Settings {
     public departuresSiteId: number | null,
     public departuresSiteName: string,
     public departuresCount: number,
+    public departuresRoutes: string[],
     public icaListId: string | null,
   ) {}
 }

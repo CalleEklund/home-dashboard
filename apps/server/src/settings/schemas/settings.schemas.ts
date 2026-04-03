@@ -5,6 +5,7 @@ export const SettingsSchema = z.object({
   departuresSiteId: z.number().nullable(),
   departuresSiteName: z.string(),
   departuresCount: z.number(),
+  departuresRoutes: z.array(z.string()),
   icaListId: z.string().nullable(),
 });
 
@@ -13,6 +14,7 @@ export const UpdateSettingsBodySchema = z.object({
   departuresSiteId: z.number().nullable().optional(),
   departuresSiteName: z.string().optional(),
   departuresCount: z.number().optional(),
+  departuresRoutes: z.array(z.string()).optional(),
   icaListId: z.string().nullable().optional(),
 });
 

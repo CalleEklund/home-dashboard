@@ -10,7 +10,7 @@ import WeeklyPlanner from "../features/weekly-planner"
 
 export const WIDGETS: Registry = {
   clock: { label: "Clock", icon: "\u{1F550}", component: Clock, defaultSpan: { colSpan: 4, rowSpan: 2 } },
-  weather: { label: "Weather", icon: "\u{1F324}\uFE0F", component: Weather, defaultSpan: { colSpan: 2, rowSpan: 2 } },
+  weather: { label: "Weather", icon: "\u{1F324}\uFE0F", component: Weather, defaultSpan: { colSpan: 5, rowSpan: 3 } },
   notes: { label: "Notes", icon: "\u{1F4DD}", component: Notes, defaultSpan: { colSpan: 3, rowSpan: 4 } },
   departures: { label: "Departures", icon: "\u{1F68C}", component: Departures, defaultSpan: { colSpan: 3, rowSpan: 4 } },
   ica: { label: "ICA Shopping", icon: "\u{1F6D2}", component: IcaShopping, defaultSpan: { colSpan: 3, rowSpan: 5 } },

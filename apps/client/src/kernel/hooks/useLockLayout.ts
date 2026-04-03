@@ -69,7 +69,16 @@ export function useLockLayout() {
     setLayout((prev) => prev.filter((w) => w.id !== id));
   };
 
+  const reorderWidgets = (fromIndex: number, toIndex: number) => {
+    setLayout((prev) => {
+      const next = [...prev];
+      const [moved] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, moved);
+      return next;
+    });
+  };
+
   const resetLayout = () => setLayout(DEFAULT_LOCK_LAYOUT);
 
-  return { layout, moveWidget, resizeWidget, addWidget, removeWidget, resetLayout };
+  return { layout, moveWidget, resizeWidget, addWidget, removeWidget, reorderWidgets, resetLayout };
 }

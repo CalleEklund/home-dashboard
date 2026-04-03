@@ -4,6 +4,7 @@ CREATE TABLE settings (
   departures_site_id INT,
   departures_site_name TEXT NOT NULL DEFAULT '',
   departures_count INT NOT NULL DEFAULT 5,
+  departures_routes JSONB NOT NULL DEFAULT '[]',
   ica_list_id TEXT
 );
 

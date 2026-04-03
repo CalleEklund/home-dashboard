@@ -39,7 +39,7 @@ function TaskPill({
         <span className="shrink-0 text-[#6c7086]">{"\u{1F501}"}</span>
       )}
       <button
-        className="shrink-0  text-[#f38ba8] opacity-0 transition-opacity group-hover:opacity-100"
+        className="shrink-0 text-[#f38ba8] opacity-100 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100"
         onClick={(e) => {
           e.stopPropagation();
           onRemove(task.id);
@@ -195,7 +195,7 @@ export default function WeeklyPlanner() {
         </div>
       </div>
 
-      <div className="grid flex-1 grid-cols-7 gap-1">
+      <div className="grid flex-1 grid-cols-4 gap-1 sm:grid-cols-7">
         {WEEKDAYS.map((day) => {
           const isToday = isCurrentWeek && day === todayDay;
           const dayTasks = visibleTasks.filter((t) => t.days.includes(day));

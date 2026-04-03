@@ -124,7 +124,7 @@ export default function Notes() {
               />
             ) : (
               <button
-                className={`rounded-t-lg px-2.5 py-1 text-xs transition-colors ${
+                className={`rounded-t-lg px-2.5 py-1.5 text-xs transition-colors sm:py-1 ${
                   l.id === activeListId
                     ? "bg-[#313244] text-[#cdd6f4]"
                     : "text-[#6c7086] hover:text-[#a6adc8]"
@@ -136,14 +136,25 @@ export default function Notes() {
                 {l.name}
               </button>
             )}
-            {l.id === activeListId && lists.length > 1 && (
-              <button
-                className="ml-0.5 text-xs text-[#f38ba8] transition-transform active:scale-90"
-                onClick={() => removeList(l.id)}
-                onPointerDown={(e) => e.stopPropagation()}
-              >
-                &times;
-              </button>
+            {l.id === activeListId && (
+              <>
+                <button
+                  className="ml-0.5 px-1 text-[10px] text-[#6c7086] transition-transform active:scale-90"
+                  onClick={() => startRename(l.id, l.name)}
+                  onPointerDown={(e) => e.stopPropagation()}
+                >
+                  ✏️
+                </button>
+                {lists.length > 1 && (
+                  <button
+                    className="text-xs text-[#f38ba8] transition-transform active:scale-90"
+                    onClick={() => removeList(l.id)}
+                    onPointerDown={(e) => e.stopPropagation()}
+                  >
+                    &times;
+                  </button>
+                )}
+              </>
             )}
           </div>
         ))}

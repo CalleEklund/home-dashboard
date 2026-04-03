@@ -5,6 +5,7 @@ export type SettingsData = {
   departuresSiteId: number | null
   departuresSiteName: string
   departuresCount: number
+  departuresRoutes: string[]
   icaListId: string | null
 }
 
