@@ -10,7 +10,7 @@ COPY packages/api-schema/package.json packages/api-schema/
 RUN pnpm install --frozen-lockfile
 COPY packages/ packages/
 COPY apps/server/ apps/server/
-RUN pnpm --filter @home-dashboard/server build
+RUN pnpm --filter @home-dashboard/api-schema build && pnpm --filter @home-dashboard/server build
 
 FROM base AS runtime
 WORKDIR /app/apps/server
