@@ -28,4 +28,4 @@ COPY --from=build /app/apps/server/atlas.hcl /app/apps/server/atlas.hcl
 COPY --from=build /app/apps/server/schema.sql /app/apps/server/schema.sql
 COPY --from=build /app/apps/server/migrations /app/apps/server/migrations
 
-CMD atlas migrate apply --env production && node dist/main.js
+CMD atlas migrate apply --dir file://migrations --url "$DATABASE_URL" && node dist/main.js
