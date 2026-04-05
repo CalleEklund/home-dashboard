@@ -1,7 +1,9 @@
-import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import puppeteer from 'puppeteer-core';
 import type { Browser, Page } from 'puppeteer-core';
+import { sql, InjectPostgresPool, type PostgresPool } from '../../kernel/postgres';
 import { IcaAuthPort } from '../ports/ica-auth.port';
 import type { AuthPollResult } from '../ports/ica-auth.port';
 
@@ -12,18 +14,60 @@ const CHROME_UA =
 
 type BrowserSession = { browser: Browser; page: Page };
 
+const ALGO = 'aes-256-gcm';
+
+function encrypt(text: string, key: Buffer): string {
+  const iv = randomBytes(12);
+  const cipher = createCipheriv(ALGO, key, iv);
+  const encrypted = Buffer.concat([cipher.update(text, 'utf8'), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return [iv.toString('hex'), tag.toString('hex'), encrypted.toString('hex')].join(':');
+}
+
+function decrypt(data: string, key: Buffer): string {
+  const [ivHex, tagHex, encHex] = data.split(':');
+  const decipher = createDecipheriv(ALGO, key, Buffer.from(ivHex, 'hex'));
+  decipher.setAuthTag(Buffer.from(tagHex, 'hex'));
+  return decipher.update(Buffer.from(encHex, 'hex')) + decipher.final('utf8');
+}
+
 @Injectable()
-export class IcaAuthAdapter extends IcaAuthPort {
+export class IcaAuthAdapter extends IcaAuthPort implements OnModuleInit {
   private readonly logger = new Logger(IcaAuthAdapter.name);
   private readonly chromeWs: string;
+  private readonly encryptionKey: Buffer | null;
 
-  constructor(private readonly config: ConfigService) {
+  constructor(
+    private readonly config: ConfigService,
+    @InjectPostgresPool() private readonly pool: PostgresPool,
+  ) {
     super();
     this.chromeWs = this.config.getOrThrow<string>('CHROME_WS_ENDPOINT');
+    const keyHex = this.config.get<string>('ICA_ENCRYPTION_KEY');
+    this.encryptionKey = keyHex ? Buffer.from(keyHex, 'hex') : null;
+    if (!this.encryptionKey) {
+      this.logger.warn('ICA_ENCRYPTION_KEY not set — tokens will be stored in plaintext');
+    }
   }
+
   private accessToken: string | null = null;
   private sessionId: string | null = null;
   private session: BrowserSession | null = null;
+
+  async onModuleInit(): Promise<void> {
+    await this.loadSession();
+    if (this.sessionId) {
+      try {
+        await this.refreshAccessToken();
+        this.logger.log('Restored ICA session from database');
+      } catch {
+        this.logger.log('Stored ICA session expired, clearing');
+        this.accessToken = null;
+        this.sessionId = null;
+        await this.saveSession();
+      }
+    }
+  }
 
   isAuthenticated(): boolean {
     return this.accessToken !== null;
@@ -32,6 +76,7 @@ export class IcaAuthAdapter extends IcaAuthPort {
   logout(): void {
     this.accessToken = null;
     this.sessionId = null;
+    this.saveSession().catch(() => {});
     this.logger.log('Session cleared');
   }
 
@@ -58,6 +103,7 @@ export class IcaAuthAdapter extends IcaAuthPort {
     if (!res.ok) {
       this.accessToken = null;
       this.sessionId = null;
+      await this.saveSession();
       throw new UnauthorizedException('Session expired. Please log in again.');
     }
 
@@ -65,10 +111,12 @@ export class IcaAuthAdapter extends IcaAuthPort {
     if (!data.accessToken) {
       this.accessToken = null;
       this.sessionId = null;
+      await this.saveSession();
       throw new UnauthorizedException('Session expired. Please log in again.');
     }
 
     this.accessToken = data.accessToken;
+    await this.saveSession();
     this.logger.log('Access token refreshed');
   }
 
@@ -221,7 +269,8 @@ export class IcaAuthAdapter extends IcaAuthPort {
     }
 
     this.accessToken = data.accessToken;
-    this.logger.log('Login: access token obtained');
+    await this.saveSession();
+    this.logger.log('Login: access token obtained and persisted');
   }
 
   private async closeSession(): Promise<void> {
@@ -232,5 +281,53 @@ export class IcaAuthAdapter extends IcaAuthPort {
       await page.close();
       browser.disconnect();
     } catch { /* ignore */ }
+  }
+
+  private encryptValue(value: string | null): string | null {
+    if (!value) return null;
+    if (!this.encryptionKey) return value;
+    return encrypt(value, this.encryptionKey);
+  }
+
+  private decryptValue(value: string | null): string | null {
+    if (!value) return null;
+    if (!this.encryptionKey) return value;
+    try {
+      return decrypt(value, this.encryptionKey);
+    } catch {
+      this.logger.warn('Failed to decrypt token — may be plaintext from before encryption was enabled');
+      return null;
+    }
+  }
+
+  private async loadSession(): Promise<void> {
+    try {
+      await this.pool.query(
+        sql.unsafe`INSERT INTO settings (id) VALUES (1) ON CONFLICT (id) DO NOTHING`,
+      );
+      const row = await this.pool.one(
+        sql.unsafe`SELECT ica_session_id, ica_access_token FROM settings WHERE id = 1`,
+      );
+      const r = row as { ica_session_id: string | null; ica_access_token: string | null };
+      this.sessionId = this.decryptValue(r.ica_session_id);
+      this.accessToken = this.decryptValue(r.ica_access_token);
+    } catch (err) {
+      this.logger.error('Failed to load ICA session from DB', err);
+    }
+  }
+
+  private async saveSession(): Promise<void> {
+    try {
+      await this.pool.query(
+        sql.unsafe`
+          UPDATE settings
+          SET ica_session_id = ${this.encryptValue(this.sessionId) ?? null},
+              ica_access_token = ${this.encryptValue(this.accessToken) ?? null}
+          WHERE id = 1
+        `,
+      );
+    } catch (err) {
+      this.logger.error('Failed to save ICA session to DB', err);
+    }
   }
 }
